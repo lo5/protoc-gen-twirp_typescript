@@ -191,7 +191,9 @@ func (ctx *APIContext) enableMarshal(m *Model) {
 		if !ok {
 			log.Fatalf("could not find model of type %s for field %s", f.Type, f.Name)
 		}
-		ctx.enableMarshal(mm)
+		if !mm.CanMarshal {
+			ctx.enableMarshal(mm)
+		}
 	}
 }
 
@@ -207,7 +209,9 @@ func (ctx *APIContext) enableUnmarshal(m *Model) {
 		if !ok {
 			log.Fatalf("could not find model of type %s for field %s", f.Type, f.Name)
 		}
-		ctx.enableUnmarshal(mm)
+		if !mm.CanUnmarshal {
+			ctx.enableUnmarshal(mm)
+		}
 	}
 }
 
